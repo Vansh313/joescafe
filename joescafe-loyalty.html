@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JOE'S CAFÉ LONDON — Loyalty</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #faf8f5;
+    --cream: #f0ebe3;
+    --gold: #c9a96e;
+    --gold-light: #e8d5b0;
+    --dark-gray: #1a1a1a;
+    --mid-gray: #555;
+    --light-gray: #e0dbd3;
+    --silver: #9aa0a6;
+    --platinum: #b0c4d8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--black);
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── SPLASH / LANDING ── */
+  #splash {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+    position: relative;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  #splash::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(201,169,110,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .splash-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(32px, 8vw, 52px);
+    letter-spacing: 0.18em;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .splash-sub {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 11px;
+    letter-spacing: 0.45em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .splash-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 40px;
+    opacity: 0.6;
+  }
+
+  .splash-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(16px, 4vw, 22px);
+    color: var(--light-gray);
+    margin-bottom: 14px;
+    letter-spacing: 0.02em;
+  }
+
+  .splash-desc {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    letter-spacing: 0.08em;
+    margin-bottom: 52px;
+    line-height: 1.8;
+    max-width: 300px;
+  }
+
+  .btn-primary {
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    padding: 16px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 16px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover { background: var(--gold); color: var(--black); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 16px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    max-width: 320px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── SCREENS ── */
+  .screen {
+    display: none;
+    min-height: 100vh;
+    background: var(--black);
+    animation: fadeIn 0.4s ease;
+  }
+
+  .screen.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HEADER ── */
+  .app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .header-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    color: var(--white);
+  }
+
+  .header-logo span {
+    display: block;
+    font-size: 8px;
+    letter-spacing: 0.5em;
+    color: var(--gold);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .back-btn {
+    background: none;
+    border: none;
+    color: var(--mid-gray);
+    cursor: pointer;
+    font-size: 20px;
+    padding: 4px;
+    transition: color 0.2s;
+  }
+
+  .back-btn:hover { color: var(--gold); }
+
+  /* ── FORMS ── */
+  .form-screen {
+    padding: 40px 24px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 7vw, 38px);
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+    color: var(--white);
+  }
+
+  .form-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .form-subtitle {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    letter-spacing: 0.15em;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+  }
+
+  .input-group {
+    margin-bottom: 24px;
+  }
+
+  .input-group label {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+    margin-bottom: 10px;
+  }
+
+  .input-group input, .input-group select {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    padding: 12px 0;
+    color: var(--white);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .input-group input:focus, .input-group select:focus {
+    border-bottom-color: var(--gold);
+  }
+
+  .input-group select option { background: var(--dark-gray); }
+
+  .input-group input::placeholder { color: rgba(255,255,255,0.2); }
+
+  /* ── DASHBOARD ── */
+  .dashboard {
+    padding: 0 0 100px;
+  }
+
+  .member-hero {
+    background: linear-gradient(160deg, #1a1612 0%, #0a0a0a 60%);
+    padding: 32px 24px 40px;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+  }
+
+  .member-hero::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .member-greeting {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .member-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(26px, 7vw, 36px);
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border: 1px solid;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .tier-badge.silver { border-color: var(--silver); color: var(--silver); }
+  .tier-badge.gold { border-color: var(--gold); color: var(--gold); }
+  .tier-badge.platinum { border-color: var(--platinum); color: var(--platinum); }
+
+  .tier-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+
+  .points-display {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .points-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 14vw, 72px);
+    font-weight: 300;
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+
+  .points-label {
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+    padding-bottom: 8px;
+  }
+
+  .points-value {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    letter-spacing: 0.1em;
+  }
+
+  .points-value span { color: var(--gold); }
+
+  .progress-section {
+    margin-top: 28px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+    margin-bottom: 10px;
+  }
+
+  .progress-bar {
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%);
+    transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  /* ── QUICK ACTIONS ── */
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .quick-action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 8px;
+    cursor: pointer;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .quick-action:last-child { border-right: none; }
+  .quick-action:hover { background: rgba(201,169,110,0.05); }
+
+  .qa-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .qa-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--mid-gray);
+    text-align: center;
+  }
+
+  /* ── SECTION ── */
+  .section {
+    padding: 32px 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .section-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,169,110,0.2);
+  }
+
+  /* ── REWARDS CARDS ── */
+  .rewards-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+  }
+
+  .rewards-scroll::-webkit-scrollbar { display: none; }
+
+  .reward-card {
+    flex: 0 0 160px;
+    background: var(--dark-gray);
+    border: 1px solid rgba(255,255,255,0.07);
+    padding: 20px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reward-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .reward-card:hover { border-color: rgba(201,169,110,0.3); }
+  .reward-card:hover::before { transform: scaleX(1); }
+
+  .reward-card.locked { opacity: 0.4; cursor: not-allowed; }
+
+  .reward-emoji { font-size: 28px; margin-bottom: 12px; display: block; }
+
+  .reward-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .reward-pts {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+  }
+
+  .reward-pts.locked-pts { color: var(--mid-gray); }
+
+  /* ── TRANSACTION HISTORY ── */
+  .txn-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .txn-item:last-child { border-bottom: none; }
+
+  .txn-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .txn-icon {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .txn-name {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+
+  .txn-date {
+    font-size: 10px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    letter-spacing: 0.1em;
+  }
+
+  .txn-pts {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    text-align: right;
+  }
+
+  .txn-pts.earn { color: var(--gold); }
+  .txn-pts.redeem { color: #e07070; }
+
+  /* ── BIRTHDAY OFFER ── */
+  .birthday-banner {
+    margin: 24px;
+    padding: 24px;
+    background: linear-gradient(135deg, #1a160e 0%, #0f0d08 100%);
+    border: 1px solid rgba(201,169,110,0.25);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .birthday-banner::before {
+    content: '🎂';
+    position: absolute;
+    right: 20px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 48px;
+    opacity: 0.15;
+  }
+
+  .birthday-label {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .birthday-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .birthday-desc {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    line-height: 1.6;
+  }
+
+  /* ── QR CHECK-IN ── */
+  .qr-screen {
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .qr-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+
+  .qr-subtitle {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .qr-frame {
+    width: 220px; height: 220px;
+    border: 1px solid rgba(201,169,110,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 32px;
+  }
+
+  .qr-corner {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+  }
+
+  .qr-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .qr-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .qr-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .qr-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+  .qr-inner {
+    width: 180px; height: 180px;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 2px;
+  }
+
+  .qr-cell {
+    background: var(--white);
+    border-radius: 1px;
+  }
+
+  .qr-cell.empty { background: transparent; }
+
+  .qr-member-id {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+  }
+
+  .qr-note {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 0.15em;
+    line-height: 1.6;
+    max-width: 260px;
+  }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    z-index: 200;
+  }
+
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    color: var(--mid-gray);
+  }
+
+  .nav-item.active { color: var(--gold); }
+  .nav-item:hover { color: var(--white); }
+
+  .nav-icon { font-size: 18px; margin-bottom: 4px; }
+
+  .nav-label {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ── REGISTER ── */
+  .register-perks {
+    background: var(--dark-gray);
+    margin: 0 0 32px;
+    padding: 20px 24px;
+    border-left: 2px solid var(--gold);
+  }
+
+  .perk-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--light-gray);
+    letter-spacing: 0.05em;
+  }
+
+  .perk-icon { color: var(--gold); font-size: 14px; }
+
+  /* ── REFER ── */
+  .refer-code-box {
+    background: var(--dark-gray);
+    border: 1px solid rgba(201,169,110,0.2);
+    padding: 28px;
+    text-align: center;
+    margin-bottom: 28px;
+  }
+
+  .refer-code {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .refer-desc {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    letter-spacing: 0.1em;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 90px; left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--gold);
+    color: var(--black);
+    padding: 12px 28px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 999;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ── REDEEM MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 500;
+    align-items: flex-end;
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: #111;
+    border-top: 1px solid rgba(201,169,110,0.2);
+    padding: 32px 24px 48px;
+    width: 100%;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+
+  .modal-handle {
+    width: 36px; height: 3px;
+    background: rgba(255,255,255,0.15);
+    margin: 0 auto 28px;
+    border-radius: 2px;
+  }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .modal-pts {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 24px;
+  }
+
+  .modal-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--mid-gray);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  /* ── TIER INFO ── */
+  .tier-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+  }
+
+  .tier-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tier-card.active-tier {
+    border-color: var(--gold);
+  }
+
+  .tier-card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 300;
+    margin-bottom: 4px;
+  }
+
+  .tier-card-range {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .tier-card-benefit {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--light-gray);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tier-card-benefit:last-child { border-bottom: none; }
+
+  .current-badge {
+    position: absolute;
+    top: 16px; right: 16px;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 4px 10px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ SPLASH ═══════════════ -->
+<div id="splash">
+  <div class="splash-logo">JOE'S CAFÉ</div>
+  <div class="splash-sub">London · Dubai</div>
+  <div class="splash-divider"></div>
+  <div class="splash-tagline">Loyalty, Redefined.</div>
+  <p class="splash-desc">Earn points with every visit.<br>Redeem for your favourite dishes.<br>Experience the privilege of membership.</p>
+  <button class="btn-primary" onclick="showScreen('login')">SIGN IN</button>
+  <button class="btn-secondary" onclick="showScreen('register')">JOIN THE CLUB</button>
+</div>
+
+<!-- ═══════════════ REGISTER ═══════════════ -->
+<div id="register" class="screen">
+  <div class="app-header">
+    <button class="back-btn" onclick="showSplash()">←</button>
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <div style="width:28px"></div>
+  </div>
+  <div class="form-screen">
+    <div class="form-title">Join the<br><em>Inner Circle</em></div>
+    <div class="form-subtitle">Membership is complimentary</div>
+
+    <div class="register-perks">
+      <div class="perk-item"><span class="perk-icon">◆</span> 1 point per AED 10 spent</div>
+      <div class="perk-item"><span class="perk-icon">◆</span> Exclusive birthday offer</div>
+      <div class="perk-item"><span class="perk-icon">◆</span> Silver, Gold & Platinum tiers</div>
+      <div class="perk-item"><span class="perk-icon">◆</span> Refer friends, earn bonus points</div>
+      <div class="perk-item"><span class="perk-icon">◆</span> Redeem on any menu item</div>
+    </div>
+
+    <div class="input-group">
+      <label>Full Name</label>
+      <input type="text" id="reg-name" placeholder="Your name">
+    </div>
+    <div class="input-group">
+      <label>Email Address</label>
+      <input type="email" id="reg-email" placeholder="your@email.com">
+    </div>
+    <div class="input-group">
+      <label>Phone (WhatsApp)</label>
+      <input type="tel" id="reg-phone" placeholder="+971 XX XXX XXXX">
+    </div>
+    <div class="input-group">
+      <label>Date of Birth</label>
+      <input type="date" id="reg-dob">
+    </div>
+    <div class="input-group">
+      <label>Referral Code (optional)</label>
+      <input type="text" id="reg-ref" placeholder="Enter code">
+    </div>
+    <br>
+    <button class="btn-primary" onclick="doRegister()">CREATE MY ACCOUNT</button>
+  </div>
+</div>
+
+<!-- ═══════════════ LOGIN ═══════════════ -->
+<div id="login" class="screen">
+  <div class="app-header">
+    <button class="back-btn" onclick="showSplash()">←</button>
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <div style="width:28px"></div>
+  </div>
+  <div class="form-screen">
+    <div class="form-title">Welcome<br><em>Back</em></div>
+    <div class="form-subtitle">Sign in to your account</div>
+
+    <div class="input-group">
+      <label>Email Address</label>
+      <input type="email" id="login-email" placeholder="your@email.com">
+    </div>
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="••••••••">
+    </div>
+    <br>
+    <button class="btn-primary" onclick="doDemoLogin()">SIGN IN</button>
+    <br><br>
+    <button class="btn-secondary" onclick="showScreen('register')">NEW? JOIN THE CLUB</button>
+  </div>
+</div>
+
+<!-- ═══════════════ DASHBOARD ═══════════════ -->
+<div id="dashboard" class="screen">
+  <div class="app-header">
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <button onclick="showToast('Profile settings coming soon')" style="background:none;border:none;color:var(--mid-gray);cursor:pointer;font-size:18px;">⚙</button>
+  </div>
+
+  <div class="dashboard">
+    <!-- Hero Points -->
+    <div class="member-hero">
+      <div class="member-greeting">Good evening</div>
+      <div class="member-name" id="dash-name">Sarah Al Maktoum</div>
+      <div class="tier-badge gold">
+        <div class="tier-dot"></div>
+        Gold Member
+      </div>
+      <div class="points-display">
+        <div class="points-number" id="dash-points">1,240</div>
+        <div class="points-label">pts</div>
+      </div>
+      <div class="points-value">≈ <span>AED 124</span> in rewards value</div>
+      <div class="progress-section">
+        <div class="progress-label">
+          <span>Gold → Platinum</span>
+          <span id="progress-text">1,240 / 2,000 pts</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width: 62%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="quick-action" onclick="showNavScreen('qr')">
+        <div class="qa-icon">◈</div>
+        <div class="qa-label">Check In</div>
+      </div>
+      <div class="quick-action" onclick="showNavScreen('rewards')">
+        <div class="qa-icon">✦</div>
+        <div class="qa-label">Redeem</div>
+      </div>
+      <div class="quick-action" onclick="showNavScreen('refer')">
+        <div class="qa-icon">◎</div>
+        <div class="qa-label">Refer</div>
+      </div>
+      <div class="quick-action" onclick="showNavScreen('tiers')">
+        <div class="qa-icon">◇</div>
+        <div class="qa-label">Tiers</div>
+      </div>
+    </div>
+
+    <!-- Birthday Banner -->
+    <div class="birthday-banner">
+      <div class="birthday-label">Birthday Privilege</div>
+      <div class="birthday-title">A Gift From Joe's</div>
+      <div class="birthday-desc">Enjoy complimentary Joe's Dubai Chocolate or any dessert of your choice on your special day. Valid the entire birthday week.</div>
+    </div>
+
+    <!-- Rewards -->
+    <div class="section">
+      <div class="section-title">Redeem Points</div>
+      <div class="rewards-scroll">
+        <div class="reward-card" onclick="openModal('Joe\'s Signature Coffee','100 pts','Any specialty coffee or signature drink from our full menu.')">
+          <span class="reward-emoji">☕</span>
+          <div class="reward-name">Signature Coffee</div>
+          <div class="reward-pts">100 pts</div>
+        </div>
+        <div class="reward-card" onclick="openModal('Joe\'s Breakfast','350 pts','Full English, Eggs Benedict, or any breakfast dish from our breakfast menu.')">
+          <span class="reward-emoji">🍳</span>
+          <div class="reward-name">Joe's Breakfast</div>
+          <div class="reward-pts">350 pts</div>
+        </div>
+        <div class="reward-card" onclick="openModal('Dubai Chocolate','400 pts','Our iconic Joe\'s Dubai Chocolate dessert — crisp kunafa with pistachio cream and chocolate fudge.')">
+          <span class="reward-emoji">🍫</span>
+          <div class="reward-name">Dubai Chocolate</div>
+          <div class="reward-pts">400 pts</div>
+        </div>
+        <div class="reward-card" onclick="openModal('Wagyu Burger','600 pts','Joe\'s Classic — Wagyu Australian beef burger with all the trimmings.')">
+          <span class="reward-emoji">🍔</span>
+          <div class="reward-name">Wagyu Burger</div>
+          <div class="reward-pts">600 pts</div>
+        </div>
+        <div class="reward-card locked">
+          <span class="reward-emoji">🥩</span>
+          <div class="reward-name">Wagyu Rib-Eye</div>
+          <div class="reward-pts locked-pts">1,200 pts · Platinum</div>
+        </div>
+        <div class="reward-card locked">
+          <span class="reward-emoji">🦞</span>
+          <div class="reward-name">Lobster Thermidor</div>
+          <div class="reward-pts locked-pts">1,500 pts · Platinum</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transaction History -->
+    <div class="section">
+      <div class="section-title">Recent Activity</div>
+      <div class="txn-item">
+        <div class="txn-left">
+          <div class="txn-icon">+</div>
+          <div>
+            <div class="txn-name">Dinner Visit</div>
+            <div class="txn-date">24 May 2026 · AED 340</div>
+          </div>
+        </div>
+        <div class="txn-pts earn">+34</div>
+      </div>
+      <div class="txn-item">
+        <div class="txn-left">
+          <div class="txn-icon">+</div>
+          <div>
+            <div class="txn-name">Referral Bonus — Layla</div>
+            <div class="txn-date">21 May 2026</div>
+          </div>
+        </div>
+        <div class="txn-pts earn">+200</div>
+      </div>
+      <div class="txn-item">
+        <div class="txn-left">
+          <div class="txn-icon">−</div>
+          <div>
+            <div class="txn-name">Redeemed: Dubai Chocolate</div>
+            <div class="txn-date">18 May 2026</div>
+          </div>
+        </div>
+        <div class="txn-pts redeem">−400</div>
+      </div>
+      <div class="txn-item">
+        <div class="txn-left">
+          <div class="txn-icon">+</div>
+          <div>
+            <div class="txn-name">Brunch Visit</div>
+            <div class="txn-date">15 May 2026 · AED 520</div>
+          </div>
+        </div>
+        <div class="txn-pts earn">+52</div>
+      </div>
+      <div class="txn-item">
+        <div class="txn-left">
+          <div class="txn-icon">★</div>
+          <div>
+            <div class="txn-name">Birthday Bonus</div>
+            <div class="txn-date">10 May 2026 · Annual gift</div>
+          </div>
+        </div>
+        <div class="txn-pts earn">+500</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-nav" id="main-nav">
+    <button class="nav-item active" onclick="showNavScreen('dashboard')">
+      <div class="nav-icon">⌂</div>
+      <div class="nav-label">Home</div>
+    </button>
+    <button class="nav-item" onclick="showNavScreen('rewards')">
+      <div class="nav-icon">✦</div>
+      <div class="nav-label">Rewards</div>
+    </button>
+    <button class="nav-item" onclick="showNavScreen('qr')">
+      <div class="nav-icon">◈</div>
+      <div class="nav-label">Check In</div>
+    </button>
+    <button class="nav-item" onclick="showNavScreen('profile')">
+      <div class="nav-icon">◯</div>
+      <div class="nav-label">Profile</div>
+    </button>
+  </div>
+</div>
+
+<!-- ═══════════════ REWARDS SCREEN ═══════════════ -->
+<div id="rewards" class="screen">
+  <div class="app-header">
+    <button class="back-btn" onclick="showNavScreen('dashboard')">←</button>
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <div style="width:28px"></div>
+  </div>
+  <div class="section" style="border:none">
+    <div style="margin-bottom:24px">
+      <div class="form-title">Redeem<br><em>Your Points</em></div>
+      <div class="form-subtitle" style="margin-bottom:0">You have <span style="color:var(--gold)">1,240 pts</span> available</div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.07);padding:20px;cursor:pointer" onclick="openModal('Specialty Coffee','100 pts','Any hot or iced specialty coffee — espresso, flat white, latte, cappuccino, and more.')">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-size:24px">☕</span>
+          <div>
+            <div style="font-family:Cormorant Garamond,serif;font-size:18px;color:var(--white)">Specialty Coffee</div>
+            <div style="font-size:10px;color:var(--gold);letter-spacing:.2em;margin-top:3px">100 PTS</div>
+          </div>
+        </div>
+        <span style="color:var(--gold);font-size:18px">→</span>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.07);padding:20px;cursor:pointer" onclick="openModal('Joe\'s Signature Drink','150 pts','Choco Deluxe, Joe\'s Signature iced espresso, or any signature drink on the menu.')">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-size:24px">🥤</span>
+          <div>
+            <div style="font-family:Cormorant Garamond,serif;font-size:18px;color:var(--white)">Signature Drink</div>
+            <div style="font-size:10px;color:var(--gold);letter-spacing:.2em;margin-top:3px">150 PTS</div>
+          </div>
+        </div>
+        <span style="color:var(--gold);font-size:18px">→</span>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.07);padding:20px;cursor:pointer" onclick="openModal('Breakfast of Choice','350 pts','Any dish from Joe\'s full breakfast menu — Full English, Eggs Benedict, Shakshouka, French Toast and more.')">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-size:24px">🍳</span>
+          <div>
+            <div style="font-family:Cormorant Garamond,serif;font-size:18px;color:var(--white)">Breakfast of Choice</div>
+            <div style="font-size:10px;color:var(--gold);letter-spacing:.2em;margin-top:3px">350 PTS</div>
+          </div>
+        </div>
+        <span style="color:var(--gold);font-size:18px">→</span>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.07);padding:20px;cursor:pointer" onclick="openModal('Dessert of Choice','400 pts','Joe\'s Dubai Chocolate, Tiramisu, Sticky Pudding, Sizzlin\' Brownie or any dessert from our menu.')">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-size:24px">🍫</span>
+          <div>
+            <div style="font-family:Cormorant Garamond,serif;font-size:18px;color:var(--white)">Dessert of Choice</div>
+            <div style="font-size:10px;color:var(--gold);letter-spacing:.2em;margin-top:3px">400 PTS</div>
+          </div>
+        </div>
+        <span style="color:var(--gold);font-size:18px">→</span>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.07);padding:20px;cursor:pointer" onclick="openModal('Wagyu Burger','600 pts','Joe\'s Classic Wagyu Australian beef burger — the full experience.')">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-size:24px">🍔</span>
+          <div>
+            <div style="font-family:Cormorant Garamond,serif;font-size:18px;color:var(--white)">Wagyu Burger</div>
+            <div style="font-size:10px;color:var(--gold);letter-spacing:.2em;margin-top:3px">600 PTS</div>
+          </div>
+        </div>
+        <span style="color:var(--gold);font-size:18px">→</span>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.07);padding:20px;opacity:.4">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-size:24px">🦞</span>
+          <div>
+            <div style="font-family:Cormorant Garamond,serif;font-size:18px;color:var(--white)">Lobster Thermidor</div>
+            <div style="font-size:10px;color:var(--mid-gray);letter-spacing:.2em;margin-top:3px">1,500 PTS · PLATINUM ONLY</div>
+          </div>
+        </div>
+        <span style="color:var(--mid-gray);font-size:18px">🔒</span>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,0.07);padding:20px;opacity:.4">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="font-size:24px">🥩</span>
+          <div>
+            <div style="font-family:Cormorant Garamond,serif;font-size:18px;color:var(--white)">Wagyu Rib-Eye Steak</div>
+            <div style="font-size:10px;color:var(--mid-gray);letter-spacing:.2em;margin-top:3px">1,200 PTS · PLATINUM ONLY</div>
+          </div>
+        </div>
+        <span style="color:var(--mid-gray);font-size:18px">🔒</span>
+      </div>
+    </div>
+  </div>
+  <div style="height:100px"></div>
+  <div class="bottom-nav">
+    <button class="nav-item" onclick="showNavScreen('dashboard')"><div class="nav-icon">⌂</div><div class="nav-label">Home</div></button>
+    <button class="nav-item active" onclick="showNavScreen('rewards')"><div class="nav-icon">✦</div><div class="nav-label">Rewards</div></button>
+    <button class="nav-item" onclick="showNavScreen('qr')"><div class="nav-icon">◈</div><div class="nav-label">Check In</div></button>
+    <button class="nav-item" onclick="showNavScreen('profile')"><div class="nav-icon">◯</div><div class="nav-label">Profile</div></button>
+  </div>
+</div>
+
+<!-- ═══════════════ QR CHECK-IN ═══════════════ -->
+<div id="qr" class="screen">
+  <div class="app-header">
+    <button class="back-btn" onclick="showNavScreen('dashboard')">←</button>
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <div style="width:28px"></div>
+  </div>
+  <div class="qr-screen">
+    <div class="qr-title">Check In</div>
+    <div class="qr-subtitle">Show this to your server</div>
+
+    <div class="qr-frame">
+      <div class="qr-corner tl"></div>
+      <div class="qr-corner tr"></div>
+      <div class="qr-corner bl"></div>
+      <div class="qr-corner br"></div>
+      <div class="qr-inner" id="qr-grid"></div>
+    </div>
+
+    <div class="qr-member-id">JC · DXB · 004821</div>
+    <div class="qr-note">Your server scans this code to log your spend and instantly credit your points. No app download needed — this page is your loyalty card.</div>
+
+    <br><br>
+    <div style="background:var(--dark-gray);border:1px solid rgba(201,169,110,0.15);padding:20px 24px;width:100%;max-width:320px">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:12px">Today's Earning Rate</div>
+      <div style="font-family:Cormorant Garamond,serif;font-size:28px;font-weight:300;color:var(--white)">1 point</div>
+      <div style="font-size:11px;color:var(--mid-gray);margin-top:4px">per AED 10 spent</div>
+    </div>
+  </div>
+  <div style="height:80px"></div>
+  <div class="bottom-nav">
+    <button class="nav-item" onclick="showNavScreen('dashboard')"><div class="nav-icon">⌂</div><div class="nav-label">Home</div></button>
+    <button class="nav-item" onclick="showNavScreen('rewards')"><div class="nav-icon">✦</div><div class="nav-label">Rewards</div></button>
+    <button class="nav-item active" onclick="showNavScreen('qr')"><div class="nav-icon">◈</div><div class="nav-label">Check In</div></button>
+    <button class="nav-item" onclick="showNavScreen('profile')"><div class="nav-icon">◯</div><div class="nav-label">Profile</div></button>
+  </div>
+</div>
+
+<!-- ═══════════════ REFER ═══════════════ -->
+<div id="refer" class="screen">
+  <div class="app-header">
+    <button class="back-btn" onclick="showNavScreen('dashboard')">←</button>
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <div style="width:28px"></div>
+  </div>
+  <div class="form-screen">
+    <div class="form-title">Refer a<br><em>Friend</em></div>
+    <div class="form-subtitle">Both of you earn bonus points</div>
+
+    <div class="refer-code-box">
+      <div style="font-size:10px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--mid-gray);margin-bottom:16px">Your Personal Code</div>
+      <div class="refer-code">SARAH200</div>
+      <div class="refer-desc">Share this code with friends.<br>They get 100 pts on joining. You get 200 pts when they first visit.</div>
+    </div>
+
+    <button class="btn-primary" onclick="showToast('Code copied — share it!')">COPY CODE</button>
+    <br><br>
+    <button class="btn-secondary" onclick="showToast('Sharing via WhatsApp...')">SHARE VIA WHATSAPP</button>
+
+    <div style="margin-top:40px">
+      <div class="section-title" style="padding:0">Referral History</div>
+      <div class="txn-item">
+        <div class="txn-left">
+          <div class="txn-icon">✓</div>
+          <div>
+            <div class="txn-name">Layla Hassan</div>
+            <div class="txn-date">21 May 2026 · Joined & visited</div>
+          </div>
+        </div>
+        <div class="txn-pts earn">+200</div>
+      </div>
+      <div class="txn-item">
+        <div class="txn-left">
+          <div class="txn-icon">◎</div>
+          <div>
+            <div class="txn-name">Ahmed Al Razi</div>
+            <div class="txn-date">18 May 2026 · Joined, awaiting visit</div>
+          </div>
+        </div>
+        <div class="txn-pts" style="color:var(--mid-gray)">Pending</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ TIERS ═══════════════ -->
+<div id="tiers" class="screen">
+  <div class="app-header">
+    <button class="back-btn" onclick="showNavScreen('dashboard')">←</button>
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <div style="width:28px"></div>
+  </div>
+  <div style="padding:32px 24px 0">
+    <div class="form-title">Membership<br><em>Tiers</em></div>
+    <div class="form-subtitle" style="margin-bottom:0">Your status grows with every visit</div>
+  </div>
+  <div class="tier-cards">
+    <div class="tier-card">
+      <div class="tier-card-name" style="color:var(--silver)">Silver</div>
+      <div class="tier-card-range" style="color:var(--silver)">0 – 999 points</div>
+      <div class="tier-card-benefit"><span style="color:var(--silver)">◆</span> 1 pt per AED 10 spent</div>
+      <div class="tier-card-benefit"><span style="color:var(--silver)">◆</span> Birthday dessert offer</div>
+      <div class="tier-card-benefit"><span style="color:var(--silver)">◆</span> Refer a friend — earn 200 pts</div>
+      <div class="tier-card-benefit"><span style="color:var(--silver)">◆</span> Redeem for coffees & desserts</div>
+    </div>
+
+    <div class="tier-card active-tier">
+      <div class="current-badge">Your Tier</div>
+      <div class="tier-card-name" style="color:var(--gold)">Gold</div>
+      <div class="tier-card-range" style="color:var(--gold)">1,000 – 1,999 points</div>
+      <div class="tier-card-benefit"><span style="color:var(--gold)">◆</span> 1.2x points multiplier</div>
+      <div class="tier-card-benefit"><span style="color:var(--gold)">◆</span> Priority table reservations</div>
+      <div class="tier-card-benefit"><span style="color:var(--gold)">◆</span> Birthday week — free breakfast</div>
+      <div class="tier-card-benefit"><span style="color:var(--gold)">◆</span> Access to all Silver rewards</div>
+      <div class="tier-card-benefit"><span style="color:var(--gold)">◆</span> Redeem up to Wagyu Burger level</div>
+    </div>
+
+    <div class="tier-card">
+      <div class="tier-card-name" style="color:var(--platinum)">Platinum</div>
+      <div class="tier-card-range" style="color:var(--platinum)">2,000+ points</div>
+      <div class="tier-card-benefit"><span style="color:var(--platinum)">◆</span> 1.5x points multiplier</div>
+      <div class="tier-card-benefit"><span style="color:var(--platinum)">◆</span> Monthly complimentary dish</div>
+      <div class="tier-card-benefit"><span style="color:var(--platinum)">◆</span> Birthday month — free main course</div>
+      <div class="tier-card-benefit"><span style="color:var(--platinum)">◆</span> Exclusive Wagyu & Lobster rewards</div>
+      <div class="tier-card-benefit"><span style="color:var(--platinum)">◆</span> Early access to special menus</div>
+      <div class="tier-card-benefit"><span style="color:var(--platinum)">◆</span> Dedicated WhatsApp concierge</div>
+    </div>
+  </div>
+  <div style="height:40px"></div>
+</div>
+
+<!-- ═══════════════ PROFILE ═══════════════ -->
+<div id="profile" class="screen">
+  <div class="app-header">
+    <button class="back-btn" onclick="showNavScreen('dashboard')">←</button>
+    <div class="header-logo">JOE'S CAFÉ <span>LONDON</span></div>
+    <div style="width:28px"></div>
+  </div>
+  <div class="form-screen">
+    <div class="form-title"><em>My</em><br>Account</div>
+    <div class="form-subtitle" style="margin-bottom:32px">Gold Member · ID #004821</div>
+
+    <div style="display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,0.07)">
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="showToast('Edit profile coming soon')">
+        <span style="font-size:12px;font-weight:300;letter-spacing:.1em;color:var(--light-gray)">Edit Profile</span>
+        <span style="color:var(--gold)">→</span>
+      </div>
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="showNavScreen('tiers')">
+        <span style="font-size:12px;font-weight:300;letter-spacing:.1em;color:var(--light-gray)">Membership Tiers</span>
+        <span style="color:var(--gold)">→</span>
+      </div>
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="showNavScreen('refer')">
+        <span style="font-size:12px;font-weight:300;letter-spacing:.1em;color:var(--light-gray)">Refer a Friend</span>
+        <span style="color:var(--gold)">→</span>
+      </div>
+      <div style="padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="showToast('Notification settings coming soon')">
+        <span style="font-size:12px;font-weight:300;letter-spacing:.1em;color:var(--light-gray)">Notifications (WhatsApp)</span>
+        <span style="color:var(--gold)">→</span>
+      </div>
+      <div style="padding:16px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="showSplash()">
+        <span style="font-size:12px;font-weight:300;letter-spacing:.1em;color:#e07070">Sign Out</span>
+        <span style="color:#e07070">→</span>
+      </div>
+    </div>
+
+    <div style="margin-top:40px;text-align:center">
+      <div style="font-size:10px;color:var(--mid-gray);letter-spacing:.15em;line-height:2">
+        Fashion Avenue, Dubai Mall<br>
+        +971 56 445 4640<br>
+        joescafedubai.com
+      </div>
+    </div>
+  </div>
+  <div class="bottom-nav">
+    <button class="nav-item" onclick="showNavScreen('dashboard')"><div class="nav-icon">⌂</div><div class="nav-label">Home</div></button>
+    <button class="nav-item" onclick="showNavScreen('rewards')"><div class="nav-icon">✦</div><div class="nav-label">Rewards</div></button>
+    <button class="nav-item" onclick="showNavScreen('qr')"><div class="nav-icon">◈</div><div class="nav-label">Check In</div></button>
+    <button class="nav-item active" onclick="showNavScreen('profile')"><div class="nav-icon">◯</div><div class="nav-label">Profile</div></button>
+  </div>
+</div>
+
+<!-- ═══════════════ REDEEM MODAL ═══════════════ -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title" id="modal-title">Specialty Coffee</div>
+    <div class="modal-pts" id="modal-pts">100 PTS</div>
+    <div class="modal-desc" id="modal-desc">Any specialty coffee from the full menu.</div>
+    <button class="btn-primary" onclick="doRedeem()">CONFIRM REDEMPTION</button>
+    <br><br>
+    <button class="btn-secondary" onclick="closeModal()">CANCEL</button>
+  </div>
+</div>
+
+<!-- ═══════════════ TOAST ═══════════════ -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── State ──
+  let currentUser = null;
+
+  // ── Navigation ──
+  function showSplash() {
+    document.getElementById('splash').style.display = 'flex';
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  }
+
+  function showScreen(id) {
+    document.getElementById('splash').style.display = 'none';
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  function showNavScreen(id) {
+    document.getElementById('splash').style.display = 'none';
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  // ── Register ──
+  function doRegister() {
+    const name = document.getElementById('reg-name').value || 'Valued Member';
+    currentUser = { name, points: 0 };
+    document.getElementById('dash-name').textContent = name.split(' ')[0] + ' ' + (name.split(' ')[1] || '');
+    document.getElementById('dash-points').textContent = '0';
+    showToast('Welcome to Joe\'s Inner Circle!');
+    showScreen('dashboard');
+  }
+
+  // ── Login ──
+  function doDemoLogin() {
+    currentUser = { name: 'Sarah Al Maktoum', points: 1240 };
+    showToast('Welcome back, Sarah.');
+    showScreen('dashboard');
+  }
+
+  // ── Modal ──
+  let currentModal = {};
+
+  function openModal(name, pts, desc) {
+    document.getElementById('modal-title').textContent = name;
+    document.getElementById('modal-pts').textContent = pts.toUpperCase();
+    document.getElementById('modal-desc').textContent = desc;
+    currentModal = { name, pts };
+    document.getElementById('modal-overlay').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (!e || e.target === document.getElementById('modal-overlay')) {
+      document.getElementById('modal-overlay').classList.remove('open');
+    }
+  }
+
+  function doRedeem() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    showToast('Redemption confirmed — show this to your server');
+  }
+
+  // ── Toast ──
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // ── QR Code (decorative) ──
+  function buildQR() {
+    const grid = document.getElementById('qr-grid');
+    if (!grid) return;
+    // pattern based on pseudo-member ID
+    const pattern = [
+      1,1,1,0,1,0,1,1,1,
+      1,0,1,0,0,0,1,0,1,
+      1,0,1,1,0,1,1,0,1,
+      0,0,0,1,1,1,0,0,0,
+      1,0,1,0,1,0,1,0,1,
+      0,1,0,1,1,1,0,1,0,
+      1,1,1,0,1,0,1,1,1,
+      1,0,1,0,0,0,1,0,1,
+      1,1,1,1,0,1,1,1,1,
+    ];
+    grid.innerHTML = '';
+    pattern.forEach(v => {
+      const cell = document.createElement('div');
+      cell.className = 'qr-cell' + (v === 0 ? ' empty' : '');
+      grid.appendChild(cell);
+    });
+  }
+
+  buildQR();
+</script>
+</body>
+</html>
